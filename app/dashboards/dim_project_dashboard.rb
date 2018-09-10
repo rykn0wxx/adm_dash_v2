@@ -1,6 +1,6 @@
 require "administrate/base_dashboard"
 
-class DimProjectDashboard < Administrate::BaseDashboard
+class DimProjectDashboard < ApplicationDashboard
   # ATTRIBUTE_TYPES
   # a hash that describes the type of each of the model's fields.
   #
@@ -27,15 +27,7 @@ class DimProjectDashboard < Administrate::BaseDashboard
     :created_at,
   ].freeze
 
-  # SHOW_PAGE_ATTRIBUTES
-  # an array of attributes that will be displayed on the model's show page.
-  SHOW_PAGE_ATTRIBUTES = [
-    :dim_site,
-    :id,
-    :project_name,
-    :created_at,
-    :updated_at,
-  ].freeze
+  SHOW_PAGE_ATTRIBUTES = ATTRIBUTE_TYPES.keys - READ_ONLY_ATTRIBUTES
 
   # FORM_ATTRIBUTES
   # an array of attributes that will be displayed
@@ -48,7 +40,7 @@ class DimProjectDashboard < Administrate::BaseDashboard
   # Overwrite this method to customize how dim projects are displayed
   # across all pages of the admin dashboard.
   #
-  # def display_resource(dim_project)
-  #   "DimProject ##{dim_project.id}"
-  # end
+	def display_resource(dim_project)
+    "#{dim_project.project_name}"
+  end
 end

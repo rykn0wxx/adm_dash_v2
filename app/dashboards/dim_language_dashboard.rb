@@ -1,6 +1,6 @@
 require "administrate/base_dashboard"
 
-class DimLanguageDashboard < Administrate::BaseDashboard
+class DimLanguageDashboard <ApplicationDashboard
   # ATTRIBUTE_TYPES
   # a hash that describes the type of each of the model's fields.
   #
@@ -28,16 +28,7 @@ class DimLanguageDashboard < Administrate::BaseDashboard
     :language_code,
   ].freeze
 
-  # SHOW_PAGE_ATTRIBUTES
-  # an array of attributes that will be displayed on the model's show page.
-  SHOW_PAGE_ATTRIBUTES = [
-    :dim_region,
-    :id,
-    :language_name,
-    :language_code,
-    :created_at,
-    :updated_at,
-  ].freeze
+  SHOW_PAGE_ATTRIBUTES = ATTRIBUTE_TYPES.keys - READ_ONLY_ATTRIBUTES
 
   # FORM_ATTRIBUTES
   # an array of attributes that will be displayed
@@ -51,7 +42,7 @@ class DimLanguageDashboard < Administrate::BaseDashboard
   # Overwrite this method to customize how dim languages are displayed
   # across all pages of the admin dashboard.
   #
-  # def display_resource(dim_language)
-  #   "DimLanguage ##{dim_language.id}"
-  # end
+	def display_resource(dim_language)
+    "#{dim_language.language_name}"
+  end
 end

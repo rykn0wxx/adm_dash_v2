@@ -1,6 +1,6 @@
 require "administrate/base_dashboard"
 
-class DimRegionDashboard < Administrate::BaseDashboard
+class DimRegionDashboard < ApplicationDashboard
   # ATTRIBUTE_TYPES
   # a hash that describes the type of each of the model's fields.
   #
@@ -23,30 +23,18 @@ class DimRegionDashboard < Administrate::BaseDashboard
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
+		:region_name,
+    :region_code,
     :dim_languages,
     :dim_sites,
-    :id,
-    :region_name,
   ].freeze
 
-  # SHOW_PAGE_ATTRIBUTES
-  # an array of attributes that will be displayed on the model's show page.
-  SHOW_PAGE_ATTRIBUTES = [
-    :dim_languages,
-    :dim_sites,
-    :id,
-    :region_name,
-    :region_code,
-    :created_at,
-    :updated_at,
-  ].freeze
+  SHOW_PAGE_ATTRIBUTES = ATTRIBUTE_TYPES.keys - READ_ONLY_ATTRIBUTES
 
   # FORM_ATTRIBUTES
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
-    :dim_languages,
-    :dim_sites,
     :region_name,
     :region_code,
   ].freeze
@@ -54,7 +42,7 @@ class DimRegionDashboard < Administrate::BaseDashboard
   # Overwrite this method to customize how dim regions are displayed
   # across all pages of the admin dashboard.
   #
-  # def display_resource(dim_region)
-  #   "DimRegion ##{dim_region.id}"
-  # end
+	def display_resource(dim_region)
+    "#{dim_region.region_name}"
+  end
 end

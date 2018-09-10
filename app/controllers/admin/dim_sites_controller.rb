@@ -1,21 +1,29 @@
 module Admin
   class DimSitesController < Admin::ApplicationController
-    # To customize the behavior of this controller,
-    # you can overwrite any of the RESTful actions. For example:
-    #
-    # def index
-    #   super
-    #   @resources = DimSite.
-    #     page(params[:page]).
-    #     per(10)
-    # end
+		before_action :set_local, :only => [:import, :do_import]
 
-    # Define a custom finder by overriding the `find_resource` method:
-    # def find_resource(param)
-    #   DimSite.find_by!(slug: param)
-    # end
+		def import
+		  render locals: {
+				adm_import: AdmImport.new,
+				page: @page,
+				resources: @resources
+			}
+		end
 
-    # See https://administrate-prototype.herokuapp.com/customizing_controller_actions
-    # for more information
+		def do_import
+			@adm_import = AdmImport.new(params)
+			if @adm_import.save
+				redirect_to [namespace, resource_class], notice: "Imported sites successfully."
+			else
+				render :import
+			end
+		end
+
+		private
+		def set_local
+			resource_includes = dashboard.association_includes
+			@page = Administrate::Page::Collection.new(dashboard, resource_class.new)
+			@resources = scoped_resource.includes(*resource_includes) if resource_includes.any?
+		end
   end
 end

@@ -1,6 +1,6 @@
 require "administrate/base_dashboard"
 
-class DimSiteDashboard < Administrate::BaseDashboard
+class DimSiteDashboard < ApplicationDashboard
   # ATTRIBUTE_TYPES
   # a hash that describes the type of each of the model's fields.
   #
@@ -29,17 +29,7 @@ class DimSiteDashboard < Administrate::BaseDashboard
     :site_name,
   ].freeze
 
-  # SHOW_PAGE_ATTRIBUTES
-  # an array of attributes that will be displayed on the model's show page.
-  SHOW_PAGE_ATTRIBUTES = [
-    :dim_region,
-    :dim_projects,
-    :id,
-    :site_name,
-    :site_code,
-    :created_at,
-    :updated_at,
-  ].freeze
+  SHOW_PAGE_ATTRIBUTES = ATTRIBUTE_TYPES.keys - READ_ONLY_ATTRIBUTES
 
   # FORM_ATTRIBUTES
   # an array of attributes that will be displayed
@@ -54,7 +44,7 @@ class DimSiteDashboard < Administrate::BaseDashboard
   # Overwrite this method to customize how dim sites are displayed
   # across all pages of the admin dashboard.
   #
-  # def display_resource(dim_site)
-  #   "DimSite ##{dim_site.id}"
-  # end
+	def display_resource(dim_site)
+    "#{dim_site.site_name}"
+  end
 end
