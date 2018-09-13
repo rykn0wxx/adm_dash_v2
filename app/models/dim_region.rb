@@ -12,4 +12,6 @@
 class DimRegion < ApplicationRecord
 	has_many :dim_languages
 	has_many :dim_sites
+	validates :region_name, presence: true
+	validates :region_name, uniqueness: { case_sensitive: false }
 end

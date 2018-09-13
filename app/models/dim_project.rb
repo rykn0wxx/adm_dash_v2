@@ -15,4 +15,6 @@
 
 class DimProject < ApplicationRecord
   belongs_to :dim_site
+	validates :project_name, presence: true
+	validates :project_name, uniqueness: { case_sensitive: false }
 end

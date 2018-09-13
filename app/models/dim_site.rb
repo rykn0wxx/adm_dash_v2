@@ -17,4 +17,6 @@
 class DimSite < ApplicationRecord
 	belongs_to :dim_region
 	has_many :dim_projects
+	validates :site_name, presence: true
+	validates :site_name, uniqueness: { case_sensitive: false }
 end

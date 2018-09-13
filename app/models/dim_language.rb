@@ -16,4 +16,6 @@
 
 class DimLanguage < ApplicationRecord
   belongs_to :dim_region
+	validates :language_name, presence: true
+	validates :language_name, uniqueness: { case_sensitive: false }
 end
